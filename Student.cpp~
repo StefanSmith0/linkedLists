@@ -1,0 +1,10 @@
+#include "Student.h"
+#include <cstring>
+
+using namespace std;
+
+Student::Student() {
+  strcpy(name, "default name");
+  id = 0;
+  gpa = 0.00;
+}

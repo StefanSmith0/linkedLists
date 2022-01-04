@@ -1,0 +1,16 @@
+#ifndef STUDENT_H
+#define STUDENT_H
+#include <iostream>
+
+using namespace std;
+
+class Student{
+ public:
+  Student();
+ private:
+  char name[30];
+  int id;
+  float gpa;
+};
+
+#endif
