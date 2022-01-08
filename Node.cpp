@@ -2,17 +2,17 @@
 
 using namespace std;
 
-Node::Node() {
-  student = NULL;
+Node::Node(Student* newStudent) {
+  student = newStudent;
   nextNode = NULL;
+}
+
+Node::~Node() {
+  
 }
 
 Student* Node::getStudent() {
   return student;
-}
-
-void Node::setStudent(Student* newStudent) {
-  student = newStudent;
 }
 
 Node* Node::getNext() {

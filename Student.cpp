@@ -3,10 +3,10 @@
 
 using namespace std;
 
-Student::Student() {
-  strcpy(name, "default name");
-  id = 0;
-  gpa = 0.00;
+Student::Student(char newName[30], int newID, float newGPA) {
+  strcpy(name, newName);
+  id = newID;
+  gpa = newGPA;
 }
 
 char* Student::getName() {
