@@ -9,6 +9,10 @@ Student::Student(char newName[30], int newID, float newGPA) {
   gpa = newGPA;
 }
 
+Student::~Student() {
+  cout << "Student deleted" << endl;  
+}
+
 char* Student::getName() {
   char* nameptr = name;
   return nameptr;

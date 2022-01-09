@@ -5,6 +5,7 @@
 
 using namespace std;
 
+void destroy(Node* current);
 void print(Node* current);
 void add(Node* newNode, Node* &head, Node* currentNode, Node* prevNode);
 
@@ -32,16 +33,32 @@ int main() {
       print(head);
     }
     else if(!strcmp(input, "quit")) {
+      destroy(head);
+      print(head);
       running = false;
     }
     else {
       cout << "Command not recognized" << endl;
     }
+    cin.clear();
   }
   return 0;
 }
 
+void destroy(Node* current) {
+  if(current == NULL) { //if list is empty
+    return;
+  }
+  if(current->getNext() != NULL) {
+    destroy(current->getNext());
+  }
+  delete[] current;
+}
+
 void print(Node* current) {
+  if(current == NULL) { //if list is empty, or run off the end
+    return;
+  }
   cout << endl;
   cout << "Student: " << current->getStudent()->getName() << endl;
   cout << "ID: " << current->getStudent()->getid() << endl;
