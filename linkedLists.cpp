@@ -5,7 +5,8 @@
 
 using namespace std;
 
-void destroy(Node* current);
+float average(Node* current, float total, int iterate, float gpaAverage);
+void destroy(Node* &current);
 void print(Node* current);
 void add(Node* newNode, Node* &head, Node* currentNode, Node* prevNode);
 
@@ -32,6 +33,9 @@ int main() {
     else if(!strcmp(input, "print")) {
       print(head);
     }
+    else if(!strcmp(input, "average")) {
+      //      average(head, 0, 0);
+    }
     else if(!strcmp(input, "quit")) {
       destroy(head);
       print(head);
@@ -45,14 +49,31 @@ int main() {
   return 0;
 }
 
-void destroy(Node* current) {
+float average(Node* current, float total, int iterate, float gpaAverage) {
+  if(current == NULL) {
+    return 0;
+  }
+  if(current->getNext() != NULL) {
+    total += current->getStudent()->getgpa();
+    iterate++;
+    average(current->getNext(), total, iterate, gpaAverage);
+  }
+}
+
+void destroy(Node* &current) {
+  cout << "Begginning of destroy" << endl;
   if(current == NULL) { //if list is empty
     return;
   }
   if(current->getNext() != NULL) {
+    cout << "Next is not null" << endl;
     destroy(current->getNext());
   }
-  delete[] current;
+  cout << "After recursion check" << endl;
+  delete current->getStudent();
+  current = NULL;
+  //delete current;
+  cout << "End of destroy" << endl;
 }
 
 void print(Node* current) {
@@ -74,11 +95,12 @@ void add(Node* newNode, Node* &head, Node* currentNode, Node* prevNode) {
     head = newNode;
     return;
   }
-  else if(currentNode == NULL) { //if at the end of list
+  if(currentNode == NULL) { //if at the end of list
     prevNode->setNext(newNode);
     return;
   }
-  else if(newNode->getStudent()->getid() < head->getStudent()->getid()) { //if newID is smaller than head's
+
+  if(newNode->getStudent()->getid() < head->getStudent()->getid()) { //if newID is smaller than head's
     newNode->setNext(head);
     head = newNode;
   }
