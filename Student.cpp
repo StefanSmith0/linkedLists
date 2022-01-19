@@ -7,11 +7,10 @@ Student::Student(char newName[30], int newID, float newGPA) {
   strcpy(name, newName);
   id = newID;
   gpa = newGPA;
-  cout << "New student constructed" << endl;
 }
 
 Student::~Student() {
-  cout << "Student has died." << endl;  
+  cout << "Student deleted" << endl;
 }
 
 char* Student::getName() {

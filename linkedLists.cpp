@@ -5,7 +5,8 @@
 
 using namespace std;
 
-float average(Node* current, float total, int iterate, float gpaAverage);
+void deleteNode(int deleteID, Node* &head, Node* &currentNode, Node* prevNode);
+float average(Node* current, float total, int iterate);
 void destroy(Node* &current);
 void print(Node* current);
 void add(Node* newNode, Node* &head, Node* currentNode, Node* prevNode);
@@ -15,6 +16,7 @@ int main() {
   char input[30];
   int intInput;
   float floatInput;
+  float averageOutput;
   Node* head = NULL;
   while(running) {
     cout << "Enter Command: ";
@@ -34,7 +36,13 @@ int main() {
       print(head);
     }
     else if(!strcmp(input, "average")) {
-      //      average(head, 0, 0);
+      averageOutput = average(head, 0, 0);
+      cout << "Average GPA: " << averageOutput << endl;
+    }
+    else if(!strcmp(input, "delete")) {
+      cout << "ID of student to delete: ";
+      cin >> intInput;
+      deleteNode(intInput, head, head, head);
     }
     else if(!strcmp(input, "quit")) {
       destroy(head);
@@ -44,36 +52,67 @@ int main() {
     else {
       cout << "Command not recognized" << endl;
     }
-    cin.clear();
   }
   return 0;
 }
 
-float average(Node* current, float total, int iterate, float gpaAverage) {
-  if(current == NULL) {
-    return 0;
+void deleteNode(int deleteID, Node* &head, Node* &currentNode, Node* prevNode) {
+  char currentName[30];
+  strcpy(currentName, currentNode->getStudent()->getName());
+  Node* next = currentNode->getNext();
+  if(head == NULL) {
+    cout << "List is empty." << endl;
+    return;
   }
-  if(current->getNext() != NULL) {
-    total += current->getStudent()->getgpa();
-    iterate++;
-    average(current->getNext(), total, iterate, gpaAverage);
+  if(currentNode == NULL) {
+    cout << "There is no student with the ID: " << deleteID << endl;
+    return;
+  }
+  if(currentNode->getStudent()->getid() == deleteID) {
+    if(currentNode == head) {
+      delete currentNode;
+      currentNode = NULL;
+      head = next;
+    }
+    else {
+      prevNode->setNext(next);
+      delete currentNode;
+      currentNode = NULL;
+    }
+    cout << "Student: " << currentName << " deleted." << endl;
+  }
+  else {
+    deleteNode(deleteID, head, next, currentNode);
   }
 }
 
+float average(Node* current, float total, int iterate) {
+  float gpaAverage = 0;
+  if(current == NULL) {
+    return gpaAverage;
+  }
+  total += current->getStudent()->getgpa();
+  iterate++;
+  if(current->getNext() != NULL) {
+    gpaAverage = average(current->getNext(), total, iterate);
+  }
+  else {
+    gpaAverage = (total / iterate);
+  }
+  return gpaAverage;
+}
+
 void destroy(Node* &current) {
-  cout << "Begginning of destroy" << endl;
   if(current == NULL) { //if list is empty
     return;
   }
   if(current->getNext() != NULL) {
-    cout << "Next is not null" << endl;
-    destroy(current->getNext());
+    Node* next = current->getNext();
+    destroy(next);
   }
-  cout << "After recursion check" << endl;
   delete current->getStudent();
+  delete current;
   current = NULL;
-  //delete current;
-  cout << "End of destroy" << endl;
 }
 
 void print(Node* current) {
