@@ -8,7 +8,8 @@ Node::Node(Student* newStudent) {
 }
 
 Node::~Node() {
-  cout << "Node deleted" << endl;
+  delete student;
+  student = NULL;
 }
 
 Student* Node::getStudent() {

@@ -10,7 +10,6 @@ Student::Student(char newName[30], int newID, float newGPA) {
 }
 
 Student::~Student() {
-  cout << "Student deleted" << endl;
 }
 
 char* Student::getName() {

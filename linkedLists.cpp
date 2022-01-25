@@ -31,6 +31,7 @@ int main() {
       Student* newStudent = new Student(input, intInput, floatInput);
       Node* newNode = new Node(newStudent);
       add(newNode, head, head, head);
+      cin.ignore(10000,'\n');
     }
     else if(!strcmp(input, "print")) {
       print(head);
@@ -43,6 +44,7 @@ int main() {
       cout << "ID of student to delete: ";
       cin >> intInput;
       deleteNode(intInput, head, head, head);
+      cin.ignore(10000,'\n');
     }
     else if(!strcmp(input, "quit")) {
       destroy(head);
@@ -110,7 +112,6 @@ void destroy(Node* &current) {
     Node* next = current->getNext();
     destroy(next);
   }
-  delete current->getStudent();
   delete current;
   current = NULL;
 }
@@ -132,20 +133,24 @@ void print(Node* current) {
 void add(Node* newNode, Node* &head, Node* currentNode, Node* prevNode) {
   if(head == NULL) { //if list is empty
     head = newNode;
+    cout << "Student added." << endl;
     return;
   }
   if(currentNode == NULL) { //if at the end of list
     prevNode->setNext(newNode);
+    cout << "Student added." << endl;
     return;
   }
 
   if(newNode->getStudent()->getid() < head->getStudent()->getid()) { //if newID is smaller than head's
     newNode->setNext(head);
     head = newNode;
+    cout << "Student added." << endl;
   }
   else if(newNode->getStudent()->getid() < currentNode->getStudent()->getid()){ //if newID is smaller than current's
     prevNode->setNext(newNode);
     newNode->setNext(currentNode);
+    cout << "Student added." << endl;
   }
   else {
     add(newNode, head, currentNode->getNext(), currentNode);
